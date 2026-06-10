@@ -24,3 +24,13 @@ stream {
   }
 }
 ```
+
+## กำหนดค่าที่ server node
+
+```
+# /etc/rancher/rke2/config.yaml
+
+tls-san:
+  - "<load balance ip>"
+```
+

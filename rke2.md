@@ -28,19 +28,19 @@ sudo mkdir -p /etc/rancher/rke2 && \
 sudo mkdir -p /var/lib/rancher/rke2/server/manifests
 ```
 
-## สำหรับ nginx
+## กำหนดค่า dedicated control plane (ไม่ให้มีการทำงานของ user workloads ใน control plane)
 
 ```
-# /etc/rancher/rke2/config.yaml
-
-tls-san:
-  - "<load balance ip>"
+sudo tee /etc/rancher/rke2/config.yaml > /dev/null << EOF
+node-taint:
+  - "CriticalAddonsOnly=true:NoExecute"
+EOF
 ```
 
 ## Selecting the CNI plugin.
 
 ```
-sudo tee /etc/rancher/rke2/config.yaml > /dev/null << EOF
+sudo tee -a /etc/rancher/rke2/config.yaml > /dev/null << EOF
 cni: cilium
 disable-kube-proxy: true
 EOF
